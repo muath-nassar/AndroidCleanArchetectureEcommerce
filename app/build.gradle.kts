@@ -65,4 +65,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)     // coroutines + Flow support
     testImplementation(libs.androidx.room.testing)
     ksp(libs.androidx.room.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor) //  needed for HttpLoggingInterceptor
 }
