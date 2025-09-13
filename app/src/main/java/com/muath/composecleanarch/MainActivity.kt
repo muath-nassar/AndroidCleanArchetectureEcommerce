@@ -1,6 +1,7 @@
 package com.muath.composecleanarch
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,11 +12,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.muath.composecleanarch.core.common.DispatcherProvider
 import com.muath.composecleanarch.ui.theme.ComposeCleanArchTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var dispatcherProvider: DispatcherProvider
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.d("TEST_DISPATCHER", "io: ${dispatcherProvider.io}.")
         enableEdgeToEdge()
         setContent {
             ComposeCleanArchTheme {
