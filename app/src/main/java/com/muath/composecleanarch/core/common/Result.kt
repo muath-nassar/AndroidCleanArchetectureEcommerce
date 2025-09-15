@@ -6,10 +6,13 @@ package com.muath.composecleanarch.core.common
 sealed class Result<out T> {
 
     // Success containing the value
-    data class Ok<T>(val value: T): Result<T>()
+    data class Ok<out T>(val value: T): Result<T>()
 
     // Error containing the error as AppError
     data class Err(val error: AppError): Result<Nothing>()
+
+    // Loading
+    object Loading: Result<Nothing>()
 
     //------------ Helpers -------------------
 
@@ -25,6 +28,7 @@ sealed class Result<out T> {
         return when(this){
             is Ok -> Ok(transform(value))
             is Err -> this
+            is Loading -> this
         }
 
     }

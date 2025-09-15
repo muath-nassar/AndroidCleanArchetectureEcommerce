@@ -6,6 +6,8 @@ import com.muath.composecleanarch.core.common.DefaultDispatcherProvider
 import com.muath.composecleanarch.core.common.DispatcherProvider
 import com.muath.composecleanarch.core.database.AppDatabase
 import com.muath.composecleanarch.core.common.Constants
+import com.muath.composecleanarch.core.network.ConnectivityObserver
+import com.muath.composecleanarch.core.network.ConnectivityObserverImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,6 +43,11 @@ object CoreModule {
         ).build()
     }
 
-    //
+    //Connectivity Observer
+    @Provides
+    @Singleton
+    fun provideConnectivityObserver(@ApplicationContext context: Context): ConnectivityObserver {
+        return ConnectivityObserverImp(context)
+    }
 
 }

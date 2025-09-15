@@ -75,4 +75,8 @@ dependencies {
     // DI HILT
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    //Mockito for testing
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)      // nicer Kotlin DSL
 }
