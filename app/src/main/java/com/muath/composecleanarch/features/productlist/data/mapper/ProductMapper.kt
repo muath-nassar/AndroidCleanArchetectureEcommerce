@@ -10,7 +10,8 @@ fun Product.toEntity(): ProductEntity {
         name = this.name ?: "",
         description = description ?: "",
         price = price,
-        image = imageUrl ?: ""
+        image = imageUrl ?: "",
+        category = category ?: ""
     )
 }
 
@@ -20,8 +21,8 @@ fun ProductEntity.toDomain(): Product {
         name = this.name,
         description = this.description,
         price = this.price,
-        imageUrl = this.image
-
+        imageUrl = this.image,
+        category = this.category
     )
 }
 
@@ -32,6 +33,7 @@ fun ProductDto.toDomain(): Product {
         name = this.title ?: "",
         description = this.description ?: "",
         price = this.price ?: 0.0,
-        imageUrl = this.image ?: ""
+        imageUrl = this.image ?: "",
+        category = this.category ?: ""
     )
 }

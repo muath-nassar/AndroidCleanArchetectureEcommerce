@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.runtime.saveable)
     testImplementation(libs.junit)
     // for coroutines test
     testImplementation(libs.kotlinx.coroutines.test)
@@ -79,4 +80,18 @@ dependencies {
     //Mockito for testing
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)      // nicer Kotlin DSL
+
+    // Coil for Images
+    implementation(libs.coil.compose)
+
+    // swipe refresh
+    implementation(libs.androidx.compose.foundation) // or latest stable
+
+    // shimmer
+    implementation(libs.accompanist.placeholder.material3)
+
+    // navigation
+    implementation(libs.androidx.hilt.navigation.compose)
+
+
 }
