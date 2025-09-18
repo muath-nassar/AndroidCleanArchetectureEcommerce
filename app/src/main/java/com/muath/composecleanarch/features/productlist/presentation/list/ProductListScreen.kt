@@ -1,37 +1,83 @@
 package com.muath.composecleanarch.features.productlist.presentation.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.muath.composecleanarch.core.model.Product
+import com.muath.composecleanarch.core.ui.RefreshableContainer
+import com.muath.composecleanarch.core.ui.RenderAppError
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
+import com.muath.composecleanarch.features.productlist.domain.usecase.GetProductsUseCase
+import com.muath.composecleanarch.features.productlist.presentation.components.ProductGrid
+import com.muath.composecleanarch.features.productlist.presentation.components.ProductGridItem
+import com.muath.composecleanarch.features.productlist.presentation.components.ProductGridShimmer
+import com.muath.composecleanarch.features.productlist.presentation.components.ProductList
 
 
 @Composable
 fun ProductListScreen(
     onProductClick: (Int) -> Unit,
     showSnackBar: (String, String?) -> Unit,
-    applyChrome: (ChromeConfig) -> Unit
+    applyChrome: (ChromeConfig) -> Unit,
+    productListViewModel: ProductListViewModel = hiltViewModel<ProductListViewModel>()
 ) {
-    LaunchedEffect(key1 = Unit) {
-        applyChrome(ChromeConfig(title = "Products"))
+    val uiState by productListViewModel.uiState.collectAsState()
+    LaunchedEffect(Unit) {
+        applyChrome(ChromeConfig(title = "Products", showTopBar = true))
     }
-    Button(onClick = { showSnackBar("Hello", null) }) {
-        Text("show snack")
+    Column(
+    ){
+        // Filter by Category
+        CategoryChips(
+            uiState.categoryList,
+            selected = uiState.category,
+            onCategorySelected = {newSelected ->
+                productListViewModel.loadProducts(newSelected)
+            })
+        Box(modifier= Modifier
+            .weight(1f)
+        ){
+            when{
+                uiState.isLoading ->{
+                    ProductGridShimmer()
+                }
+                uiState.error != null ->{
+                    RenderAppError(error = uiState.error, onDismiss = {})
+                }
+                else ->{
+                    RefreshableContainer(
+                        isRefreshing = uiState.isLoading,
+                        onRefresh = { productListViewModel.loadProducts(uiState.category) }
+                    ) {
+                        ProductGrid(
+                            products = uiState.products,
+                            onProductClick = { product -> onProductClick(product.id) },
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
+                    //ProductGrid(products = uiState.products, onProductClick = {p -> onProductClick(p.id)})
+
+                }
+            }
+        }
+
+
     }
 
-}
-
-@Composable @Preview
-fun ProductListScreenPreview() {
-    ProductListScreen(
-        onProductClick = {},
-        showSnackBar = { _, _ -> },
-        applyChrome = {}
-    )
 }
 
 @Composable
@@ -60,11 +106,4 @@ fun CategoryChips(
             )
         }
     }
-}
-
-@Composable
-@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
-fun CategoryChipsPreview() {
-    val categories = listOf("Category 1", "Category 2", "Category 3")
-    CategoryChips(categories = categories, selected = "Category 3", onCategorySelected = {})
 }

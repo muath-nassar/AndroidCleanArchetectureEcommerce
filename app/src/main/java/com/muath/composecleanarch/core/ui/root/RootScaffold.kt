@@ -2,6 +2,8 @@ package com.muath.composecleanarch.core.ui.root
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -93,17 +95,18 @@ fun RootScaffold(
 fun SimpleTopBar(
     title: String,
     navIcon: (@Composable (() -> Unit))? = null,
-    actions: @Composable RowScope.() -> Unit = {}
+    actions: (@Composable RowScope.() -> Unit)? = null
 ) {
-    Surface(tonalElevation = 3.dp, color = MaterialTheme.colorScheme.surface) {
+    Surface(tonalElevation = 3.dp, color = MaterialTheme.colorScheme.primary) {
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(56.dp)
-                .padding(horizontal = 16.dp),
+                .height(60.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             navIcon?.invoke()
+            Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
@@ -111,7 +114,11 @@ fun SimpleTopBar(
                     .weight(1f)
                     .padding(start = if (navIcon != null) 8.dp else 0.dp)
             )
-            Row(content = actions)
+            Spacer(modifier = Modifier.weight(1f))
+            actions?.let {
+                Row(content = actions)
+            }
+
         }
     }
 }

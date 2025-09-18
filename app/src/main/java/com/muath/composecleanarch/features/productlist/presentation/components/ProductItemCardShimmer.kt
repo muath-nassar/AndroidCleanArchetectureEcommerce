@@ -1,88 +1,93 @@
 package com.muath.composecleanarch.features.productlist.presentation.components
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
+
+import androidx.compose.foundation.gestures.ScrollableDefaults
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.Text
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-// 👇 custom shimmer modifier
+import com.muath.composecleanarch.core.ui.extensions.shimmerEffect
+
+@Preview
 @Composable
-fun Modifier.simpleShimmer(): Modifier {
-    val transition = rememberInfiniteTransition(label = "shimmer")
+fun ProductGridShimmer(
+    modifier: Modifier = Modifier,
 
-    val xShimmer = transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1000f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "shimmer-anim"
-    )
+    ) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(6.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = modifier.fillMaxSize(),
+        userScrollEnabled = false
 
-    val shimmerBrush = Brush.linearGradient(
-        colors = listOf(
-            Color.LightGray.copy(alpha = 0.6f),
-            Color.LightGray.copy(alpha = 0.2f),
-            Color.LightGray.copy(alpha = 0.6f),
-        ),
-        start = Offset(xShimmer.value - 200f, 0f),
-        end = Offset(xShimmer.value, 0f)
-    )
-
-    return this.drawWithContent {
-        drawRect(shimmerBrush)
+    ) {
+        items(count = 10){p ->
+            ProductGridItemShimmer()
+        }
     }
 }
 
+
+
+
 @Composable
-fun ProductItemCardShimmer() {
+fun ProductGridItemShimmer(
+    modifier: Modifier = Modifier
+){
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 6.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    "",
+            .aspectRatio(1f),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(6.dp),
+    ){
+        Column(modifier = Modifier.padding(8.dp)) {
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .aspectRatio(1.2f)
+                    .clip(RoundedCornerShape(12.dp))
+                    .shimmerEffect()
+                ,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth(0.6f)
-                        .height(20.dp)
-                        .simpleShimmer()
+                        .fillMaxWidth()
+                        .height(16.dp)
+                        .shimmerEffect()
                 )
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    "",
-                    modifier = Modifier
-                        .fillMaxWidth(0.4f)
-                        .height(14.dp)
-                        .simpleShimmer()
-                )
-            }
+
+            Spacer(modifier = Modifier.height(4.dp))
+
             Box(
                 modifier = Modifier
-                    .size(80.dp)
-                    .simpleShimmer()
+                    .fillMaxWidth()
+                    .height(16.dp)
+                    .shimmerEffect()
+
             )
         }
+
     }
 }

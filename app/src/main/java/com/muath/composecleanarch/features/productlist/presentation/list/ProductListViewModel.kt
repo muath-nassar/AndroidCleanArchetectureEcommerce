@@ -17,9 +17,18 @@ import javax.inject.Inject
 class ProductListViewModel @Inject constructor(
     private val getProductListUseCase: GetProductsUseCase
 ): ViewModel(){
+    companion object{
+        private val BASIC_CATEGORIES = listOf("electronics", "jewelery",
+            "men's clothing", "women's clothing")
+    }
+
+
     private val _uiState = MutableStateFlow(ProductListUiState())
     val uiState: StateFlow<ProductListUiState> = _uiState
-
+    init {
+        _uiState.value = _uiState.value.copy(categoryList = BASIC_CATEGORIES)
+        loadProducts()
+    }
     fun loadProducts(
         category: String? = null,
         limit: Int? = null,
@@ -31,13 +40,15 @@ class ProductListViewModel @Inject constructor(
                 is Result.Err -> {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        error = result.errorOrNull()
+                        error = result.errorOrNull(),
+                        category = category
                     )
                 }
                 is Result.Loading -> {
                     _uiState.value = _uiState.value.copy(
                         isLoading = true,
                         error = null,
+                        category = category
                     )
                 }
                 is Result.Ok<List<Product>> -> {
@@ -45,6 +56,7 @@ class ProductListViewModel @Inject constructor(
                         products = result.getOrNull() ?: emptyList(),
                         isLoading = false,
                         error = null,
+                        category = category
                     )
                 }
             }

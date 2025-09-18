@@ -85,10 +85,7 @@ dependencies {
     implementation(libs.coil.compose)
 
     // swipe refresh
-    implementation(libs.androidx.compose.foundation) // or latest stable
-
-    // shimmer
-    implementation(libs.accompanist.placeholder.material3)
+    implementation(libs.androidx.compose.material) // or latest stable
 
     // navigation
     implementation(libs.androidx.hilt.navigation.compose)
