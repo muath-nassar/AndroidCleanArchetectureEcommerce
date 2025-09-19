@@ -9,6 +9,7 @@ import com.muath.composecleanarch.features.productlist.data.datasource.ProductLo
 import com.muath.composecleanarch.features.productlist.data.datasource.ProductRemoteDataSource
 import com.muath.composecleanarch.features.productlist.data.datasource.ProductRemoteDataSourceImp
 import com.muath.composecleanarch.features.productlist.data.local.dao.ProductDao
+import com.muath.composecleanarch.features.productlist.data.local.dao.ProductFavoriteDao
 import com.muath.composecleanarch.features.productlist.data.remote.api.ProductApiService
 import com.muath.composecleanarch.features.productlist.data.repo.ProductRepositoryImp
 import com.muath.composecleanarch.features.productlist.domain.repo.ProductRepository
@@ -33,15 +34,19 @@ object ProductListModule {
         api: ProductApiService
     ): ProductRemoteDataSource = ProductRemoteDataSourceImp(api)
 
-    // ProductDao
+    // Dao s
     @Provides @Singleton
     fun provideProductDao(db: AppDatabase): ProductDao = db.productDao()
+
+    @Provides @Singleton
+    fun provideProductFavoriteDao(db: AppDatabase): ProductFavoriteDao = db.productFavoriteDao()
 
     // Local DS
     @Provides @Singleton
     fun provideProductLocalDataSource(
-        dao: ProductDao
-    ): ProductLocalDataSource = ProductLocalDataSourceImp(dao)
+        productDao: ProductDao,
+        favoriteDao: ProductFavoriteDao
+    ): ProductLocalDataSource = ProductLocalDataSourceImp(productDao, favoriteDao)
 
     // Repo
     @Provides @Singleton

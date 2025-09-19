@@ -1,12 +1,197 @@
 package com.muath.composecleanarch.features.productlist.presentation.details
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import coil.compose.AsyncImage
+import com.muath.composecleanarch.core.model.Product
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.navigation.NavController
+import com.muath.composecleanarch.R
 
 @Composable
 fun ProductDetailsScreen(
     productId: Int,
     showSnackBar: (String, String?) -> Unit,
-    applyChrome: (ChromeConfig) -> Unit
+    applyChrome: (ChromeConfig) -> Unit,
+    viewModel: ProductDetailsViewModel = hiltViewModel(),
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+    var chromeConfig: ChromeConfig = ChromeConfig(
+        title = uiState.product?.name ?: "Product Details",
+        showTopBar = true,
+        showBottomBar = false,
+        navIcon = {
+            IconButton(onClick = {
+                navController.popBackStack()
+            }) {
+                Icon(
+                    Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.size(30.dp),
+                    contentDescription = "Back") }
+        }
+    )
+
+    LaunchedEffect(Unit){
+        applyChrome(chromeConfig)
+        viewModel.loadProduct(productId)
+    }
+    Column(
+        modifier = modifier.fillMaxSize()
+            .padding(8.dp)
+            .fillMaxWidth()
+    ) {
+        when{
+            uiState.isLoading ->{
+            }
+            uiState.error != null ->{
+            }
+            uiState.product != null ->{
+                chromeConfig = chromeConfig.copy(title = uiState.product?.name ?: "")
+                applyChrome(chromeConfig)
+                ProductDetailsContent(
+                    viewModel = viewModel,
+                    product = uiState.product!!,
+                    onFavoriteClick = { viewModel.toggleFavorite(uiState.product!!.id) },
+                    onAddToCart = { showSnackBar("Coming soon", null) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ProductDetailsContent(
+    viewModel: ProductDetailsViewModel,
+    product: Product,
+    onFavoriteClick: () -> Unit,
+    onAddToCart: () -> Unit,
+    modifier: Modifier = Modifier,
+
+) {
+    val favoriteIds by viewModel.favoriteIds.collectAsState()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp) // large header image
+        ) {
+            AsyncImage(
+                model = product.imageUrl,
+                contentDescription = product.description,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(12.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            FavoriteButton(
+                isFavorite = product.id in favoriteIds,
+                onFavoriteClick = onFavoriteClick,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(12.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Product Name
+        Text(
+            text = product.name ?: "",
+            style = MaterialTheme.typography.headlineSmall,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Price
+        Text(
+            text = "$${product.price}",
+            style = MaterialTheme.typography.headlineMedium.copy(
+                color = MaterialTheme.colorScheme.primary
+            )
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Description (scrollable if long)
+        Text(
+            text = product.description?: "",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        Spacer(modifier = Modifier.weight(1f)) // push button to bottom
+
+        // Add to Cart button
+        Button(
+            onClick = onAddToCart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Text("Add to Cart", style = MaterialTheme.typography.labelLarge)
+        }
+    }
+}
+
+@Composable
+fun FavoriteButton(
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onFavoriteClick,
+        modifier = modifier,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)
+        )
+    ) {
+        Icon(
+            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+            contentDescription = if (isFavorite) stringResource(R.string.favorite)
+            else stringResource(R.string.unfavorite),
+            tint = if (isFavorite) MaterialTheme.colorScheme.error
+            else MaterialTheme.colorScheme.onSurface
+        )
+    }
 }

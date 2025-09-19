@@ -53,4 +53,15 @@ class ProductRepositoryImp @Inject constructor(
         }
         return result
     }
+
+    override suspend fun toggleFavorite(productId: Int) {
+            localDataSource.toggleFavorite(
+                productId,
+                !localDataSource.isFavorite(productId)
+                )
+    }
+
+    override fun observeFavoriteIds(): Flow<List<Int>> {
+        return localDataSource.observeFavoriteIds()
+    }
 }

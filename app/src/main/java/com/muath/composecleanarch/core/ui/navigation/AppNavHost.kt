@@ -46,6 +46,7 @@ fun AppNavHost(
                 productId= productId,
                 showSnackBar = showSnackBar,
                 applyChrome = applyChrome,
+                navController = navController
             )
         }
 

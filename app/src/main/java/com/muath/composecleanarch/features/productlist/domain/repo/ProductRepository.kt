@@ -16,4 +16,8 @@ interface ProductRepository {
     ): Flow<Result<List<Product>>>
 
     suspend fun getProductById(id: Int): Result<Product>
+
+    suspend fun toggleFavorite(productId: Int)
+
+    fun observeFavoriteIds(): Flow<List<Int>>
 }

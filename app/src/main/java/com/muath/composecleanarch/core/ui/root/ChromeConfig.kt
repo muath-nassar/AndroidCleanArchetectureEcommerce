@@ -10,4 +10,6 @@ data class ChromeConfig(
     val showTopBar: Boolean = true,
     val showBottomBar: Boolean = true,
     val fab: (@Composable () -> Unit)? = null,
+    val navIcon: (@Composable () -> Unit)? = null,
+    val actions: (@Composable () -> Unit)? = null,
     )
