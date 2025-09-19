@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.muath.composecleanarch.core.model.Product
 import com.muath.composecleanarch.core.ui.components.ProductFavoriteButton
+import com.muath.composecleanarch.features.productlist.presentation.ProductBaseViewModel
 import com.muath.composecleanarch.features.productlist.presentation.list.ProductListViewModel
 
 @Composable
@@ -37,7 +38,7 @@ fun ProductGrid(
     products: List<Product>,
     modifier: Modifier = Modifier,
     onProductClick:(Product) -> Unit,
-    viewModel: ProductListViewModel
+    viewModel: ProductBaseViewModel
 
 ) {
     LazyVerticalGrid(
@@ -63,7 +64,7 @@ fun ProductGridItem(
     product: Product,
     onProductClick: (Product) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ProductListViewModel,
+    viewModel: ProductBaseViewModel,
     onFavoriteClick: ()->Unit
     ){
     Card(

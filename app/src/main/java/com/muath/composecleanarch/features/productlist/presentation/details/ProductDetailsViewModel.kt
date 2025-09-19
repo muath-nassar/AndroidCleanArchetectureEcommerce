@@ -1,6 +1,5 @@
 package com.muath.composecleanarch.features.productlist.presentation.details
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muath.composecleanarch.features.productlist.domain.usecase.GetProductByIdUseCase
 import jakarta.inject.Inject
@@ -10,15 +9,15 @@ import kotlinx.coroutines.launch
 import com.muath.composecleanarch.core.common.Result
 import com.muath.composecleanarch.core.model.Product
 import com.muath.composecleanarch.features.productlist.domain.repo.ProductRepository
+import com.muath.composecleanarch.features.productlist.presentation.ProductBaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
     private val useCase: GetProductByIdUseCase,
     private val repository: ProductRepository
-) : ViewModel() {
+) : ProductBaseViewModel(repository) {
     private var _uiState = MutableStateFlow(ProductDetailsUiState())
     val uiState: StateFlow<ProductDetailsUiState> = _uiState
 
@@ -45,19 +44,6 @@ class ProductDetailsViewModel @Inject constructor(
 
                 }
             }
-        }
-    }
-
-    val favoriteIds: StateFlow<List<Int>> =
-        repository.observeFavoriteIds().stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            emptyList()
-        )
-
-    fun toggleFavorite(productId: Int) {
-        viewModelScope.launch {
-            repository.toggleFavorite(productId)
         }
     }
 }

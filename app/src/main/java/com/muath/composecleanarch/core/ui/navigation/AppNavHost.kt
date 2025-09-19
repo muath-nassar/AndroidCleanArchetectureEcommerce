@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
 import com.muath.composecleanarch.features.productlist.presentation.details.ProductDetailsScreen
+import com.muath.composecleanarch.features.productlist.presentation.favorite.FavoriteScreen
 import com.muath.composecleanarch.features.productlist.presentation.list.ProductListScreen
 
 @Composable
@@ -48,6 +49,19 @@ fun AppNavHost(
                 applyChrome = applyChrome,
                 navController = navController
             )
+        }
+        // --------------------- Favorite Screen
+        composable(
+            route = Routes.FAVORITE,
+        ){
+            FavoriteScreen(
+                showSnackBar = showSnackBar,
+                applyChrome = applyChrome,
+                onProductClick = {
+                        id -> navController.navToProductDetailsScreen(id)
+                }
+            )
+
         }
 
     }

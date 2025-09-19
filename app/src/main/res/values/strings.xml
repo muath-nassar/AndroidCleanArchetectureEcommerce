@@ -8,4 +8,6 @@
     <!-- ProductDetails Screen-->
     <string name="favorite">Favorite</string>
     <string name="unfavorite">Unfavorite</string>
+
+    <string name="product">Product</string>
 </resources>
