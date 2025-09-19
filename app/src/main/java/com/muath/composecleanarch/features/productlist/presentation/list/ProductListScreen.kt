@@ -54,7 +54,8 @@ fun ProductListScreen(
                         ProductGrid(
                             products = uiState.products,
                             onProductClick = { product -> onProductClick(product.id) },
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
+                            viewModel = productListViewModel
                         )
                     }
 

@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import com.muath.composecleanarch.R
+import com.muath.composecleanarch.core.ui.components.ProductFavoriteButton
 
 @Composable
 fun ProductDetailsScreen(
@@ -120,7 +121,7 @@ fun ProductDetailsContent(
                 contentScale = ContentScale.Crop
             )
 
-            FavoriteButton(
+            ProductFavoriteButton(
                 isFavorite = product.id in favoriteIds,
                 onFavoriteClick = onFavoriteClick,
                 modifier = Modifier
@@ -173,25 +174,3 @@ fun ProductDetailsContent(
     }
 }
 
-@Composable
-fun FavoriteButton(
-    isFavorite: Boolean,
-    onFavoriteClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    IconButton(
-        onClick = onFavoriteClick,
-        modifier = modifier,
-        colors = IconButtonDefaults.iconButtonColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)
-        )
-    ) {
-        Icon(
-            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-            contentDescription = if (isFavorite) stringResource(R.string.favorite)
-            else stringResource(R.string.unfavorite),
-            tint = if (isFavorite) MaterialTheme.colorScheme.error
-            else MaterialTheme.colorScheme.onSurface
-        )
-    }
-}
