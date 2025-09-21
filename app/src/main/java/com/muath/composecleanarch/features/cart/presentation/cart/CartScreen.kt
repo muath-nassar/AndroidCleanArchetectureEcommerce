@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
 import com.muath.composecleanarch.features.cart.presentation.components.CartItemRow
 import kotlin.String
@@ -30,6 +31,7 @@ fun CartScreen(
     applyChrome: (ChromeConfig) -> Unit,
     showSnackBar: (String, String?) -> Unit,
     viewModel: CartScreenViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val cartProducts by viewModel.cartProducts.collectAsState()
     val totalPrice = cartProducts.sumOf { it.product.price * it.quantity }

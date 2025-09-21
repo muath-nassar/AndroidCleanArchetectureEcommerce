@@ -33,6 +33,7 @@ fun AppNavHost(
                 onProductClick = { id -> navController.navToProductDetailsScreen(id) },
                 showSnackBar = showSnackBar,
                 applyChrome = applyChrome,
+                navController = navController
             )
         }
 
@@ -58,6 +59,7 @@ fun AppNavHost(
             FavoriteScreen(
                 showSnackBar = showSnackBar,
                 applyChrome = applyChrome,
+                navController = navController,
                 onProductClick = {
                         id -> navController.navToProductDetailsScreen(id)
                 }
@@ -72,6 +74,7 @@ fun AppNavHost(
             CartScreen(
                 applyChrome = applyChrome,
                 showSnackBar = showSnackBar,
+                navController = navController
             )
         }
 

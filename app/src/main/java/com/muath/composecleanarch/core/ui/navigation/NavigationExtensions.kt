@@ -10,3 +10,11 @@ fun NavController.navToProductsListScreen(){
 fun NavController.navToProductDetailsScreen(id: Int){
     this.navigate(Routes.PRODUCT_DETAILS + "/$id")
 }
+
+fun NavController.navToFavoriteScreen(){
+    this.navigate(Routes.FAVORITE)
+}
+
+fun NavController.navToCartScreen(){
+    this.navigate(Routes.CART)
+}

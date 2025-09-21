@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muath.composecleanarch.features.cart.domain.entity.CartProduct
 import com.muath.composecleanarch.features.cart.domain.repo.CartRepository
+import com.muath.composecleanarch.features.cart.domain.usecase.EmptyCartUseCase
 import com.muath.composecleanarch.features.productlist.domain.repo.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 class CartScreenViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     private val productRepository: ProductRepository,
+    private val emptyCartUseCase: EmptyCartUseCase,
 ) : ViewModel() {
 
     private val _cartProducts = MutableStateFlow<List<CartProduct>>(emptyList())
@@ -43,7 +45,7 @@ class CartScreenViewModel @Inject constructor(
     }
     fun clearCart() {
         viewModelScope.launch {
-            cartRepository.emptyCart()
+            emptyCartUseCase.invoke()
         }
     }
 }

@@ -12,13 +12,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.muath.composecleanarch.core.model.Product
 import com.muath.composecleanarch.core.ui.RefreshableContainer
 import com.muath.composecleanarch.core.ui.RenderAppError
 import com.muath.composecleanarch.core.ui.components.AppBottomSheetDialog
+import com.muath.composecleanarch.core.ui.components.GoToCartButton
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
 import com.muath.composecleanarch.features.cart.presentation.components.CartItemControlView
 import com.muath.composecleanarch.features.cart.presentation.components.CartItemViewModel
@@ -29,6 +33,7 @@ import com.muath.composecleanarch.features.productlist.presentation.components.P
 @Composable
 fun ProductListScreen(
     onProductClick: (Int) -> Unit,
+    navController: NavController,
     showSnackBar: (String, String?) -> Unit,
     applyChrome: (ChromeConfig) -> Unit,
     productListViewModel: ProductListViewModel = hiltViewModel<ProductListViewModel>(),
@@ -60,19 +65,21 @@ fun ProductListScreen(
                     RenderAppError(error = uiState.error, onDismiss = {})
                 }
                 else ->{
-                    RefreshableContainer(
-                        isRefreshing = uiState.isLoading,
-                        onRefresh = { productListViewModel.loadProducts(uiState.category) }
-                    ) {
-                        ProductGrid(
-                            products = uiState.products,
-                            onProductClick = { product -> onProductClick(product.id) },
-                            modifier = Modifier.fillMaxSize(),
-                            viewModel = productListViewModel,
-                            onBuyClick = {product ->
-                                buyProduct = product
-                            }
-                        )
+                    Box (modifier = Modifier){
+                        RefreshableContainer(
+                            isRefreshing = uiState.isLoading,
+                            onRefresh = { productListViewModel.loadProducts(uiState.category) }
+                        ) {
+                            ProductGrid(
+                                products = uiState.products,
+                                onProductClick = { product -> onProductClick(product.id) },
+                                modifier = Modifier.fillMaxSize(),
+                                viewModel = productListViewModel,
+                                onBuyClick = { product ->
+                                    buyProduct = product
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -92,6 +99,12 @@ fun ProductListScreen(
                     )
                 }
             }
+            GoToCartButton(
+                modifier = Modifier.fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(12.dp),
+                navController = navController
+            )
         }
 
 
