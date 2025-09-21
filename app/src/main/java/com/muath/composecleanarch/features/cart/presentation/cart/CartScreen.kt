@@ -22,10 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
 import com.muath.composecleanarch.features.cart.presentation.components.CartItemRow
+import kotlin.String
+import kotlin.Unit
 
 @Composable
 fun CartScreen(
     applyChrome: (ChromeConfig) -> Unit,
+    showSnackBar: (String, String?) -> Unit,
     viewModel: CartScreenViewModel = hiltViewModel(),
 ) {
     val cartProducts by viewModel.cartProducts.collectAsState()
@@ -93,7 +96,7 @@ fun CartScreen(
                     )
                     Spacer(Modifier.height(6.dp))
                     Button(
-                        onClick = { /* TODO: navigate to checkout */ },
+                        onClick = { showSnackBar("This Application is a Demo. Please contact developer moadnassar@gmail.com", null) }, // Navigate to checkout screen")},
                         modifier = Modifier.fillMaxWidth(),
                         enabled = totalPrice > 0
                     ) {

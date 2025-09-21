@@ -85,10 +85,9 @@ fun ProductListScreen(
                     onDismiss = {buyProduct = null}
                 ){
                     CartItemControlView(
-                        product = buyProduct!!,
+                        product = it,
                         onDelete = {
                             buyProduct = null
-                            Log.d("onDelete", "ProductListScreen: deleted")
                         },
                     )
                 }

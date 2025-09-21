@@ -32,11 +32,18 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import com.muath.composecleanarch.R
+import com.muath.composecleanarch.core.ui.components.AppBottomSheetDialog
 import com.muath.composecleanarch.core.ui.components.ProductFavoriteButton
+import com.muath.composecleanarch.features.cart.presentation.components.CartItemControlView
+import com.muath.composecleanarch.features.cart.presentation.components.CartItemViewModel
 
 @Composable
 fun ProductDetailsScreen(
@@ -69,7 +76,8 @@ fun ProductDetailsScreen(
         viewModel.loadProduct(productId)
     }
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
             .padding(8.dp)
             .fillMaxWidth()
     ) {
@@ -95,13 +103,15 @@ fun ProductDetailsScreen(
 @Composable
 fun ProductDetailsContent(
     viewModel: ProductDetailsViewModel,
+    cartItemViewModel: CartItemViewModel = hiltViewModel(),
     product: Product,
     onFavoriteClick: () -> Unit,
     onAddToCart: () -> Unit,
     modifier: Modifier = Modifier,
 
-) {
+    ) {
     val favoriteIds by viewModel.favoriteIds.collectAsState()
+    var buyProduct by remember { mutableStateOf<Product?>(null) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -163,13 +173,32 @@ fun ProductDetailsContent(
 
         // Add to Cart button
         Button(
-            onClick = onAddToCart,
+            onClick = {
+                onAddToCart.invoke()
+                buyProduct = product
+                      },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
             shape = RoundedCornerShape(12.dp)
         ) {
             Text("Add to Cart", style = MaterialTheme.typography.labelLarge)
+        }
+
+        buyProduct?.let {
+
+            cartItemViewModel.addToCartBtnPressed(it.id) // This line insures at least 1 quantity is added to cart
+            AppBottomSheetDialog(
+                show = true,
+                onDismiss = {buyProduct = null}
+            ){
+                CartItemControlView(
+                    product = it,
+                    onDelete = {
+                        buyProduct = null
+                    },
+                )
+            }
         }
     }
 }

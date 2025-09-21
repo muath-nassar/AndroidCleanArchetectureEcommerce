@@ -71,6 +71,7 @@ fun AppNavHost(
         ){
             CartScreen(
                 applyChrome = applyChrome,
+                showSnackBar = showSnackBar,
             )
         }
 
