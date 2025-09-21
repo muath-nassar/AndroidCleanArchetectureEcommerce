@@ -5,13 +5,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -21,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.muath.composecleanarch.core.ui.components.ConfirmationDialog
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
 import com.muath.composecleanarch.features.cart.presentation.components.CartItemRow
 import kotlin.String
@@ -108,30 +107,4 @@ fun CartScreen(
             }
         }
     }
-}
-
-
-
-@Composable
-fun ConfirmationDialog(
-    onDismissRequest: () -> Unit,
-    onConfirm: () -> Unit,
-    title: String,
-    text: String
-) {
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        title = { Text(text = title) },
-        text = { Text(text = text) },
-        confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text("Confirm")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text("Cancel")
-            }
-        }
-    )
 }

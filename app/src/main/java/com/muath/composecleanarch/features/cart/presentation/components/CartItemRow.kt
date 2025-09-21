@@ -15,6 +15,10 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.muath.composecleanarch.R
+import com.muath.composecleanarch.core.ui.components.ConfirmationDialog
 import com.muath.composecleanarch.features.cart.domain.entity.CartItem
 import com.muath.composecleanarch.features.cart.domain.entity.CartProduct
 
@@ -33,6 +38,20 @@ fun CartItemRow(
     val product = cartProduct.product
     val quantity = cartProduct.quantity
     val totalPrice = product.price * quantity
+
+    var showDeleteItemDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteItemDialog) {
+        ConfirmationDialog(
+            onDismissRequest = { showDeleteItemDialog = false },
+            onConfirm = {
+                viewModel.updateCartItem(CartItem(product.id, 0))
+                showDeleteItemDialog = false
+            },
+            title = "Delete Item",
+            text = "Are you sure you want to remove this item from your cart?"
+        )
+    }
 
     Row(
         modifier = Modifier
@@ -72,7 +91,13 @@ fun CartItemRow(
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(
                 onClick = {
-                    viewModel.updateCartItem(CartItem(product.id, quantity - 1))
+                    val newQuantity = quantity - 1
+                    if (newQuantity == 0){
+                        showDeleteItemDialog = true
+                    }else{
+                        viewModel.updateCartItem(CartItem(product.id, newQuantity))
+                    }
+
                 },
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
