@@ -3,7 +3,6 @@ package com.muath.composecleanarch.features.cart.presentation.components
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muath.composecleanarch.features.cart.domain.entity.CartItem
-import com.muath.composecleanarch.features.cart.domain.repo.CartRepository
 import com.muath.composecleanarch.features.cart.domain.usecase.SubscribeToCartItemUseCase
 import com.muath.composecleanarch.features.cart.domain.usecase.UpdateCartItemUSeCase
 import dagger.hilt.android.lifecycle.HiltViewModel

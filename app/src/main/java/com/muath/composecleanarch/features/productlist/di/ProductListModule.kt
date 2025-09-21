@@ -13,6 +13,8 @@ import com.muath.composecleanarch.features.productlist.data.local.dao.ProductFav
 import com.muath.composecleanarch.features.productlist.data.remote.api.ProductApiService
 import com.muath.composecleanarch.features.productlist.data.repo.ProductRepositoryImp
 import com.muath.composecleanarch.features.productlist.domain.repo.ProductRepository
+import com.muath.composecleanarch.features.productlist.domain.usecase.GetProductByIdUseCase
+import com.muath.composecleanarch.features.productlist.domain.usecase.GetProductsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,4 +57,19 @@ object ProductListModule {
         local: ProductLocalDataSource,
         connectivity: ConnectivityObserver
     ): ProductRepository = ProductRepositoryImp(remote, local, connectivity)
+
+    // usecases
+
+    @Provides @Singleton
+    fun provideGetProductByIdUseCase(repository: ProductRepository): GetProductByIdUseCase{
+        return GetProductByIdUseCase(repository)
+    }
+
+    @Provides @Singleton
+    fun provideGetProductsUseCase(repository: ProductRepository): GetProductsUseCase{
+        return GetProductsUseCase(repository)
+    }
+
+
+
 }

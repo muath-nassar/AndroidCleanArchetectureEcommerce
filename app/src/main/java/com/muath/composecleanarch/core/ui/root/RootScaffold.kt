@@ -88,7 +88,9 @@ fun RootScaffold(
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         titleContentColor = MaterialTheme.colorScheme.onPrimary),
-                    navigationIcon = {chrome.navIcon?.invoke()},)
+                    navigationIcon = {chrome.navIcon?.invoke()},
+                    actions = {if (chrome.actions != null) chrome.actions?.invoke()}
+                    )
 
         },
         bottomBar = { if (chrome.showBottomBar) MyBottomNav(tabs, navController) },
@@ -104,38 +106,6 @@ fun RootScaffold(
     }
 }
 
-
-@Composable
-fun SimpleTopBar(
-    title: String,
-    navIcon: (@Composable (() -> Unit))? = null,
-    actions: (@Composable RowScope.() -> Unit)? = null
-) {
-    Surface(tonalElevation = 3.dp, color = MaterialTheme.colorScheme.primary) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            navIcon?.invoke()
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = if (navIcon != null) 8.dp else 0.dp)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            actions?.let {
-                Row(content = actions)
-            }
-
-        }
-    }
-}
 
 
 @Composable

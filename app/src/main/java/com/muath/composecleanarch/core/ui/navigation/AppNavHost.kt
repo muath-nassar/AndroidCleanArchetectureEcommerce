@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
+import com.muath.composecleanarch.features.cart.presentation.cart.CartScreen
 import com.muath.composecleanarch.features.productlist.presentation.details.ProductDetailsScreen
 import com.muath.composecleanarch.features.productlist.presentation.favorite.FavoriteScreen
 import com.muath.composecleanarch.features.productlist.presentation.list.ProductListScreen
@@ -62,6 +63,15 @@ fun AppNavHost(
                 }
             )
 
+        }
+
+        // --------------------- Cart Screen
+        composable(
+            route = Routes.CART,
+        ){
+            CartScreen(
+                applyChrome = applyChrome,
+            )
         }
 
     }

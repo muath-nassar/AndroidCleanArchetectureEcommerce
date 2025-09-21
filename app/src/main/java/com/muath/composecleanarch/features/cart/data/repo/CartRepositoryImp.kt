@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CartRepositoryImp
-    @Inject constructor(private val localDataSource: CartLocalDataSource) : CartRepository {
+    @Inject constructor(
+        private val localDataSource: CartLocalDataSource,
+    ) : CartRepository {
     override suspend fun addUpdateCartItem(cartItem: CartItem) {
         if (cartItem.quantity == 0){
             localDataSource.deleteCartItem(cartItem.productId)
@@ -19,22 +21,20 @@ class CartRepositoryImp
         localDataSource.insertCartItem(cartItem.toEntity())
     }
 
-    override suspend fun removeFromCart(productId: Int) {
-        localDataSource.deleteCartItem(productId)
-    }
-
     override fun observeCartItem(itemId: Int): Flow<CartItem?> {
         return localDataSource.observeCartItem(itemId).map { cartItemEntity ->
             cartItemEntity?.toDomain()
         }
     }
 
+    override fun observeCart(): Flow<List<CartItem>> {
+        return localDataSource.observeCartItems().map { cartItemEntities ->
+            cartItemEntities.map { it.toDomain() }
+        }
+    }
+
 
     override suspend fun emptyCart() {
         localDataSource.emptyCart()
-    }
-
-    override suspend fun existInCart(productId: Int): Boolean {
-        return localDataSource.getCartItemByProductId(productId) != null
     }
 }
