@@ -90,5 +90,9 @@ dependencies {
     // navigation
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Data Store key value
+    implementation(libs.androidx.datastore.preferences)
+
+
 
 }
