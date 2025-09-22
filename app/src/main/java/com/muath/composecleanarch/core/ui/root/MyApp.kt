@@ -9,12 +9,15 @@ import com.muath.composecleanarch.ui.theme.ComposeCleanArchTheme
 
 @Composable
 fun MyApp(viewModel: SettingsViewModel = hiltViewModel()) {
-    val settings by viewModel.settings.collectAsState()
+    val settings by viewModel.settings.collectAsState(null)
 
-    ComposeCleanArchTheme(
-        themeMode = settings.themeMode,
-        useDynamicColor = settings.useDynamicColor,
-    ) {
-        RootScaffold()
+    settings?.let{
+        ComposeCleanArchTheme(
+            themeMode = it.themeMode,
+            useDynamicColor = it.useDynamicColor,
+        ) {
+            RootScaffold()
+        }
     }
+
 }

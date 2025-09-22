@@ -8,6 +8,7 @@ import com.muath.composecleanarch.features.settings.domain.usecase.GetAppSetting
 import com.muath.composecleanarch.features.settings.domain.usecase.SetAppSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -17,8 +18,8 @@ class SettingsViewModel @Inject constructor(
     getSettingsUseCase: GetAppSettingsUseCase,
     val setSettingsUseCase: SetAppSettingsUseCase
 ): ViewModel() {
-    val settings = getSettingsUseCase()
-        .stateIn(viewModelScope, SharingStarted.Lazily, AppSettings())
+    val settings:Flow<AppSettings?> = getSettingsUseCase()
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun setSettings(settings: AppSettings){
         viewModelScope.launch {

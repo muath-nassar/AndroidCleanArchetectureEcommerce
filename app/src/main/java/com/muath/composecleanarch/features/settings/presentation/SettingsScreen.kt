@@ -47,60 +47,63 @@ fun SettingsScreen(
     LaunchedEffect(Unit) {
         applyChrome(ChromeConfig(title = "Settings", showTopBar = true))
     }
-    val settings by viewModel.settings.collectAsState()
+    val settings by viewModel.settings.collectAsState(initial = null)
     val canUseDynamicColor: Boolean = viewModel.canUseDynamicColor
 
     // Screen content
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    settings?.let { settings->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
 
-        ) {
-        if (canUseDynamicColor) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    "Use Dynamic Color",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Spacer(Modifier.weight(1f))
-                Switch(checked = settings.useDynamicColor,
-                    onCheckedChange = {
-                    viewModel.setSettings(settings.copy(useDynamicColor = it))
+            ) {
+            if (canUseDynamicColor) {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        "Use Dynamic Color",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Spacer(Modifier.weight(1f))
+                    Switch(checked = settings.useDynamicColor,
+                        onCheckedChange = {
+                            viewModel.setSettings(settings.copy(useDynamicColor = it))
+                        })
+                }
+
+                Spacer(Modifier.height(10.dp))
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        "Dark Mode",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Spacer(Modifier.weight(1f))
+
+                    if(settings.themeMode == ThemeMode.SYSTEM){
+                        Switch(checked = isSystemInDarkTheme(), onCheckedChange = {
+                            viewModel.setSettings(settings.copy(themeMode = mapTheme(it)))
+                        })
+
+                    }else{
+                        Switch(checked = settings.themeMode == ThemeMode.DARK, onCheckedChange = {
+                            viewModel.setSettings(settings.copy(themeMode = mapTheme(it)))
+                        })
+                    }
+
+                }
+
+                // Language
+                Spacer(Modifier.height(10.dp))
+                LanguageSettingDropdown(selected = settings.language, onSelected = {
+                    viewModel.setSettings(settings.copy(language = it))
                 })
             }
 
-            Spacer(Modifier.height(10.dp))
-            Row(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    "Dark Mode",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Spacer(Modifier.weight(1f))
-
-                if(settings.themeMode == ThemeMode.SYSTEM){
-                    Switch(checked = isSystemInDarkTheme(), onCheckedChange = {
-                        viewModel.setSettings(settings.copy(themeMode = mapTheme(it)))
-                    })
-
-                }else{
-                    Switch(checked = settings.themeMode == ThemeMode.DARK, onCheckedChange = {
-                        viewModel.setSettings(settings.copy(themeMode = mapTheme(it)))
-                    })
-                }
-
-            }
-
-            // Language
-            Spacer(Modifier.height(10.dp))
-            LanguageSettingDropdown(selected = settings.language, onSelected = {
-                viewModel.setSettings(settings.copy(language = it))
-            })
         }
-
     }
+
 
 }
 
