@@ -50,6 +50,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.muath.composecleanarch.core.ui.navigation.AppNavHost
 import com.muath.composecleanarch.core.ui.navigation.Routes
+import com.muath.composecleanarch.features.settings.presentation.SettingsViewModel
 import kotlinx.coroutines.launch
 
 // bottom tabs (top-level destinations)
@@ -87,13 +88,18 @@ fun RootScaffold(
                     title = { Text(chrome.title ?: "") },
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary),
-                    navigationIcon = {chrome.navIcon?.invoke()},
-                    actions = {if (chrome.actions != null) chrome.actions?.invoke()}
-                    )
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    navigationIcon = { chrome.navIcon?.invoke() },
+                    actions = { if (chrome.actions != null) chrome.actions?.invoke() }
+                )
 
         },
-        bottomBar = { if (chrome.showBottomBar) MyBottomNav(tabs, navController) },
+        bottomBar = {
+            if (chrome.showBottomBar) MyBottomNav(
+                tabs, navController,
+            )
+        },
         floatingActionButton = { chrome.fab?.invoke() },
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
     ) { innerPadding ->
@@ -107,9 +113,10 @@ fun RootScaffold(
 }
 
 
-
 @Composable
-fun MyBottomNav(tabs: List<Tab>, navController: NavHostController) {
+fun MyBottomNav(
+    tabs: List<Tab>, navController: NavHostController
+) {
     // helper: is a dest inside a given top-level route hierarchy?
     fun NavDestination?.inHierarchy(route: String): Boolean =
         this?.hierarchy?.any { it.route == route } == true

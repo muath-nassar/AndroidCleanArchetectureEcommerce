@@ -12,6 +12,7 @@ import com.muath.composecleanarch.features.cart.presentation.cart.CartScreen
 import com.muath.composecleanarch.features.productlist.presentation.details.ProductDetailsScreen
 import com.muath.composecleanarch.features.productlist.presentation.favorite.FavoriteScreen
 import com.muath.composecleanarch.features.productlist.presentation.list.ProductListScreen
+import com.muath.composecleanarch.features.settings.presentation.SettingsScreen
 
 @Composable
 fun AppNavHost(
@@ -75,6 +76,15 @@ fun AppNavHost(
                 applyChrome = applyChrome,
                 showSnackBar = showSnackBar,
                 navController = navController
+            )
+        }
+        // --------------------- Settings Screen
+        composable(
+            route = Routes.SETTINGS,
+        ){
+            SettingsScreen(
+                applyChrome = applyChrome,
+                navController = navController,
             )
         }
 
