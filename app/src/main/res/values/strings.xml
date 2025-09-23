@@ -39,34 +39,35 @@
         <item quantity="other">%d items in 🛒</item>
     </plurals>
 
-        <!-- ... other strings ... -->
+    <!-- ... other strings ... -->
 
-        <!-- Confirmation Dialog -->
-        <string name="dialog_delete_item_title">Delete Item</string>
-        <string name="dialog_delete_item_text">Are you sure you want to remove this item from your cart?</string>
-
-
-        <!-- Cart Screen -->
-        <string name="cart_screen_title">Cart</string>
-        <string name="cart_is_empty">Cart is empty 🛒</string>
-        <string name="cart_clear_cart_description">Clear Cart</string>
-        <string name="dialog_clear_cart_title">Clear Cart</string>
-        <string name="dialog_clear_cart_text">Are you sure you want to remove all items from your cart?</string>
-        <string name="total_price">Total Price: $%1$.2f</string>
-        <string name="proceed_to_checkout">Proceed to Checkout</string>
+    <!-- Confirmation Dialog -->
+    <string name="dialog_delete_item_title">Delete Item</string>
+    <string name="dialog_delete_item_text">Are you sure you want to remove this item from your cart?</string>
 
 
-        <!-- Settings Screen -->
-        <string name="settings_screen_title">Settings</string>
-        <string name="settings_use_dynamic_color">Use Dynamic Color</string>
-        <string name="settings_dark_mode">Dark Mode</string>
-        <string name="settings_select_language">Select Language</string>
+    <!-- Cart Screen -->
+    <string name="cart_screen_title">Cart</string>
+    <string name="cart_is_empty">Cart is empty 🛒</string>
+    <string name="cart_clear_cart_description">Clear Cart</string>
+    <string name="dialog_clear_cart_title">Clear Cart</string>
+    <string name="dialog_clear_cart_text">Are you sure you want to remove all items from your cart?</string>
+    <string name="total_price">Total Price: $%1$.2f</string>
+    <string name="proceed_to_checkout">Proceed to Checkout</string>
 
 
-        <!-- Generic Dialog Buttons -->
-        <string name="dialog_confirm_button">Confirm</string>
-        <string name="dialog_cancel_button">Cancel</string>
+    <!-- Settings Screen -->
+    <string name="settings_screen_title">Settings</string>
+    <string name="settings_use_dynamic_color">Use Dynamic Color</string>
+    <string name="settings_dark_mode">Dark Mode</string>
+    <string name="settings_select_language">Select Language</string>
+
+
+    <!-- Generic Dialog Buttons -->
+    <string name="dialog_confirm_button">Confirm</string>
+    <string name="dialog_cancel_button">Cancel</string>
     <string name="no_favorite">No favorites yet</string>
+    <string name="add_to_cart">Add to Cart</string>
 
 
 </resources>

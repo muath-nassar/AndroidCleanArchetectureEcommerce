@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,11 +27,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.muath.composecleanarch.core.model.Product
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -93,7 +89,7 @@ fun ProductDetailsScreen(
                     viewModel = viewModel,
                     product = uiState.product!!,
                     onFavoriteClick = { viewModel.toggleFavorite(uiState.product!!.id) },
-                    onAddToCart = { showSnackBar("Coming soon", null) }
+                    onAddToCart = {}
                 )
             }
         }
@@ -182,7 +178,7 @@ fun ProductDetailsContent(
                 .height(56.dp),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Add to Cart", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.add_to_cart), style = MaterialTheme.typography.labelLarge)
         }
 
         buyProduct?.let {

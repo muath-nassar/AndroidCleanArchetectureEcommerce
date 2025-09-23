@@ -65,6 +65,7 @@
     <string name="dialog_confirm_button">تأكيد</string>
     <string name="dialog_cancel_button">الغاء</string>
     <string name="no_favorite"> لا يوجد مفضلة</string>
+    <string name="add_to_cart">أضف للسلة</string>
 
 
 </resources>
