@@ -8,5 +8,5 @@ data class ProductListUiState(
     val isLoading: Boolean = false,
     val error: AppError? = null,
     val category: String? = null,
-    val categoryList: List<String> = emptyList()
+    val categoryList: List<Category> = emptyList()
 )

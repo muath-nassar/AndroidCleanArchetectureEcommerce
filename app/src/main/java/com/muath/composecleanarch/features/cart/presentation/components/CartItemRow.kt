@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -48,8 +49,8 @@ fun CartItemRow(
                 viewModel.updateCartItem(CartItem(product.id, 0))
                 showDeleteItemDialog = false
             },
-            title = "Delete Item",
-            text = "Are you sure you want to remove this item from your cart?"
+            title = stringResource(R.string.dialog_delete_item_title),
+            text = stringResource(R.string.dialog_delete_item_text)
         )
     }
 

@@ -1,6 +1,8 @@
 package com.muath.composecleanarch.features.productlist.presentation.list
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
+import com.muath.composecleanarch.R
 import com.muath.composecleanarch.core.common.Result
 import com.muath.composecleanarch.core.model.Product
 import com.muath.composecleanarch.features.productlist.domain.repo.ProductRepository
@@ -13,15 +15,24 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+// This is a hack for translating categories in realapps this should be gotten from remote
+data class Category(val value: String, val stringId: Int)
+
 @HiltViewModel
 class ProductListViewModel @Inject constructor(
     private val getProductListUseCase: GetProductsUseCase,
     repository: ProductRepository
 ): ProductBaseViewModel(repository){
     companion object{
-        private val BASIC_CATEGORIES = listOf("electronics", "jewelery",
-            "men's clothing", "women's clothing")
+        private val BASIC_CATEGORIES = listOf(
+            Category("electronics", R.string.category_electronics),
+            Category("jewelery", R.string.category_jewlery),
+            Category("men's clothing", R.string.category_mensclothing),
+            Category("women's clothing", R.string.category_womensclothing),
+        )
     }
+
 
 
     private val _uiState = MutableStateFlow(ProductListUiState())

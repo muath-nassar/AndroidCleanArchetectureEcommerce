@@ -1,5 +1,6 @@
 package com.muath.composecleanarch.features.productlist.presentation.list
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -13,9 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.muath.composecleanarch.R
 import com.muath.composecleanarch.core.model.Product
 import com.muath.composecleanarch.core.ui.RefreshableContainer
 import com.muath.composecleanarch.core.ui.RenderAppError
@@ -38,8 +41,10 @@ fun ProductListScreen(
     cartItemViewModel: CartItemViewModel = hiltViewModel<CartItemViewModel>()
 ) {
     val uiState by productListViewModel.uiState.collectAsState()
+    val title = stringResource(R.string.products)
     LaunchedEffect(Unit) {
-        applyChrome(ChromeConfig(title = "Products", showTopBar = true))
+
+        applyChrome(ChromeConfig(title = title, showTopBar = true))
     }
     // This variable to hold the state for Bottom Sheet
     var buyProduct by remember { mutableStateOf<Product?>(null) }
@@ -112,7 +117,7 @@ fun ProductListScreen(
 
 @Composable
 fun CategoryChips(
-    categories: List<String>,
+    categories: List<Category>,
     selected: String?,
     onCategorySelected: (String?) -> Unit
 ) {
@@ -128,16 +133,16 @@ fun CategoryChips(
             FilterChip(
                 selected = selected == null,
                 onClick = { onCategorySelected(null) },
-                label = { Text("All", style = MaterialTheme.typography.bodyMedium) }
+                label = { Text(stringResource(R.string.category_all), style = MaterialTheme.typography.bodyMedium) }
             )
         }
 
         // Category filters
         items(categories) { category ->
             FilterChip(
-                selected = selected == category,
-                onClick = { onCategorySelected(category) },
-                label = { Text(category, style = MaterialTheme.typography.bodyMedium) }
+                selected = selected == category.value,
+                onClick = { onCategorySelected(category.value) },
+                label = { Text(stringResource(category.stringId), style = MaterialTheme.typography.bodyMedium) }
             )
         }
         item{Spacer(Modifier.width(5.dp))}

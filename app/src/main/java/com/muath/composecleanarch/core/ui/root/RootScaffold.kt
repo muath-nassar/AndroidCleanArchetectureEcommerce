@@ -41,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -48,6 +49,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.muath.composecleanarch.R
 import com.muath.composecleanarch.core.ui.navigation.AppNavHost
 import com.muath.composecleanarch.core.ui.navigation.Routes
 import com.muath.composecleanarch.features.settings.presentation.SettingsViewModel
@@ -75,10 +77,10 @@ fun RootScaffold(
         scope.launch { snackBarHostState.showSnackbar(message, actionLabel = action) }
     }
     val tabs = listOf(
-        Tab(Routes.PRODUCT_LIST, "Home", Icons.Filled.Home, Icons.Outlined.Home),
-        Tab(Routes.FAVORITE, "Favorite", Icons.Filled.Favorite, Icons.Outlined.FavoriteBorder),
-        Tab(Routes.CART, "Cart", Icons.Filled.ShoppingCart, Icons.Outlined.ShoppingCart),
-        Tab(Routes.SETTINGS, "Settings", Icons.Filled.Settings, Icons.Outlined.Settings)
+        Tab(Routes.PRODUCT_LIST, stringResource(R.string.bottom_nav_home), Icons.Filled.Home, Icons.Outlined.Home),
+        Tab(Routes.FAVORITE, stringResource(R.string.bottom_nav_favorites), Icons.Filled.Favorite, Icons.Outlined.FavoriteBorder),
+        Tab(Routes.CART, stringResource(R.string.bottom_nav_cart), Icons.Filled.ShoppingCart, Icons.Outlined.ShoppingCart),
+        Tab(Routes.SETTINGS, stringResource(R.string.bottom_nav_settings), Icons.Filled.Settings, Icons.Outlined.Settings)
     )
 
     Scaffold(

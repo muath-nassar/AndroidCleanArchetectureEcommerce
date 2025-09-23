@@ -47,12 +47,6 @@ fun FavoriteScreen(
     var buyProduct by remember { mutableStateOf<Product?>(null) }
 
     Box {
-        GoToCartButton(
-            modifier = Modifier.fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(12.dp),
-            navController = navController
-        )
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -64,7 +58,7 @@ fun FavoriteScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No favorites yet",
+                        text = stringResource(R.string.no_favorite),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -93,6 +87,13 @@ fun FavoriteScreen(
                 }
 
             }
+
         }
+        GoToCartButton(
+            modifier = Modifier.fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(12.dp),
+            navController = navController
+        )
     }
 }

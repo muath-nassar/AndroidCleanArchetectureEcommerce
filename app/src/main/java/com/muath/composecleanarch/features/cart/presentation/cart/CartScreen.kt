@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -23,6 +24,8 @@ import com.muath.composecleanarch.core.ui.components.ConfirmationDialog
 import com.muath.composecleanarch.core.ui.root.ChromeConfig
 import com.muath.composecleanarch.features.cart.presentation.components.CartItemRow
 import kotlin.String
+import com.muath.composecleanarch.R
+
 import kotlin.Unit
 
 @Composable
@@ -39,14 +42,14 @@ fun CartScreen(
 
     // Update chrome with Clear Cart action only if cart has items
     val chromeConfig = ChromeConfig(
-        title = "Cart",
+        title = stringResource(R.string.cart_screen_title),
         showTopBar = true,
         actions = {
             if (cartProducts.isNotEmpty()) {
                 IconButton(onClick = { showClearCartDialog = true }) {
                     Icon(
                         Icons.Filled.Delete,
-                        contentDescription = "Clear Cart",
+                        contentDescription = stringResource(R.string.cart_clear_cart_description),
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
@@ -62,14 +65,14 @@ fun CartScreen(
                 viewModel.clearCart()
                 showClearCartDialog = false
             },
-            title = "Clear Cart",
-            text = "Are you sure you want to remove all items from your cart?"
+            title = stringResource(R.string.dialog_clear_cart_title),
+            text = stringResource(R.string.dialog_clear_cart_text)
         )
     }
 
     if (cartProducts.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Cart is empty 🛒")
+            Text(stringResource(R.string.cart_is_empty), style = MaterialTheme.typography.bodyLarge)
         }
     } else {
         Column {
@@ -90,7 +93,7 @@ fun CartScreen(
             Box(modifier = Modifier.padding(12.dp)) {
                 Column {
                     Text(
-                        text = "Total Price: $${"%.2f".format(totalPrice)}",
+                        text = stringResource(R.string.total_price, totalPrice),
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
@@ -101,7 +104,7 @@ fun CartScreen(
                         modifier = Modifier.fillMaxWidth(),
                         enabled = totalPrice > 0
                     ) {
-                        Text("Proceed to Checkout", style = MaterialTheme.typography.bodyLarge)
+                        Text(text = stringResource(R.string.proceed_to_checkout), style = MaterialTheme.typography.bodyLarge)
                     }
                 }
             }

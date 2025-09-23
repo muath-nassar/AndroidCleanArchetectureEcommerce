@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">compose clean arch</string>
+    <string name="error_no_connection">لا يوجد اتصال بالإنترنت</string>
+    <string name="error_server">حدث خطأ ما في الخادم</string>
+    <string name="error_client">لا يمكن الحصول على البيانات. الرجاء التواصل مع الدعم الفني</string>
+    <string name="error_unknown">عفوًا! حدث خطأ ما</string>
+    <string name="ok">موافق</string>
+    <!-- ProductDetails Screen-->
+    <string name="favorite">المفضلة</string>
+    <string name="unfavorite">إزالة من المفضلة</string>
+    <string name="product">المنتج</string>
+
+    <!-- Bottom Nav  -->
+    <string name="bottom_nav_home">الرئيسية</string>
+    <string name="bottom_nav_settings">الإعدادات</string>
+    <string name="bottom_nav_favorites">المفضلة</string>
+    <string name="bottom_nav_cart">السلة</string>
+
+    <string name="category_electronics">الكترونيات</string>
+    <string name="category_jewlery">مجوهرات</string>
+    <string name="category_mensclothing">ملابس رجالي</string>
+    <string name="category_womensclothing">ملابس نسائي</string>">
+    <string name="category_all">الكل</string>">
+
+    <string name="products">المتجر</string>
+
+
+    <!-- ... all your other strings ... -->
+
+    <!-- For the GoToCartButton -->
+    <plurals name="cart_button_item_count">
+        <!-- The text for 0 items -->
+        <item quantity="zero">لا توجد أغراض في 🛒</item>
+        <!-- The text for 1 item -->
+        <item quantity="one">غرض واحد في 🛒</item>
+        <!-- The text for 2 items -->
+        <item quantity="two">غرضان في 🛒</item>
+        <!-- The text for 3-10 items -->
+        <item quantity="few">%d أغراض في 🛒</item>
+        <!-- The text for 11-99 items -->
+        <item quantity="many">%d غرضًا في 🛒</item>
+        <!-- The text for 100+ items -->
+        <item quantity="other">%d غرضًا في 🛒</item>
+    </plurals>
+
+    <!-- Confirmation Dialog -->
+    <string name="dialog_delete_item_title">حذف الغرض</string>
+    <string name="dialog_delete_item_text">هل أنت متأكد أنك تريد إزالة هذا الغرض من سلة التسوق؟</string>
+
+    <!-- Cart Screen -->
+    <string name="cart_screen_title">السلة</string>
+    <string name="cart_is_empty">السلة فارغة 🛒</string>
+    <string name="cart_clear_cart_description">إفراغ السلة</string>
+    <string name="dialog_clear_cart_title">إفراغ السلة</string>
+    <string name="dialog_clear_cart_text">هل أنت متأكد أنك تريد إزالة كل الأغراض من سلتك؟</string>
+    <string name="total_price">السعر الإجمالي: $%1$.2f</string>
+    <string name="proceed_to_checkout">المتابعة للدفع</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_screen_title">الإعدادات</string>
+    <string name="settings_use_dynamic_color">استخدام اللون الديناميكي</string>
+    <string name="settings_dark_mode">الوضع الداكن</string>
+    <string name="settings_select_language">اختر اللغة</string>
+
+    <string name="dialog_confirm_button">تأكيد</string>
+    <string name="dialog_cancel_button">الغاء</string>
+    <string name="no_favorite"> لا يوجد مفضلة</string>
+
+
+</resources>

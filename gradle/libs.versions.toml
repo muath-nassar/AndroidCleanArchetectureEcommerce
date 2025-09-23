@@ -21,6 +21,7 @@ room = "2.8.0"
 mockito = "5.19.0"
 mockitoKotlin = "6.0.0"
 runtimeSaveable = "1.9.1"
+appcompat = "1.7.1"
 
 [libraries]
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
@@ -55,6 +56,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 androidx-compose-runtime-saveable = { group = "androidx.compose.runtime", name = "runtime-saveable", version.ref = "runtimeSaveable" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
