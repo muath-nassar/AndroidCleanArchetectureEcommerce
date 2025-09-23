@@ -9,26 +9,31 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.muath.composecleanarch.features.settings.domain.entity.Language
 import com.muath.composecleanarch.features.settings.domain.entity.ThemeMode
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    background = androidx.compose.ui.graphics.Color.White,
-    surface = androidx.compose.ui.graphics.Color.White,
-    onPrimary = androidx.compose.ui.graphics.Color.White,
-    onBackground = androidx.compose.ui.graphics.Color.Black
+    primary = EmeraldGreen,
+    onPrimary = LightOnPrimary,
+    secondary = SlateGray,
+    onSecondary = LightOnSecondary,
+    tertiary = Amber,
+    background = LightBackground,
+    onBackground = DarkText,
+    surface = LightSurface,
+    onSurface = DarkText,
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    background = androidx.compose.ui.graphics.Color.Black,
-    surface = androidx.compose.ui.graphics.Color.Black,
-    onPrimary = androidx.compose.ui.graphics.Color.Black,
-    onBackground = androidx.compose.ui.graphics.Color.White
+    primary = EmeraldGreenLight,
+    onPrimary = DarkOnPrimary,
+    secondary = SlateGrayLight,
+    onSecondary = DarkOnSecondary,
+    tertiary = AmberLight,
+    background = DarkBackground,
+    onBackground = LightText,
+    surface = DarkSurface,
+    onSurface = LightText,
 )
 
     /* Other default colors to override
@@ -46,6 +51,7 @@ private val DarkColorScheme = darkColorScheme(
 fun ComposeCleanArchTheme(
     themeMode: ThemeMode,
     useDynamicColor: Boolean = false,
+    language: Language,
     content: @Composable () -> Unit
 ) {
 
@@ -67,7 +73,7 @@ fun ComposeCleanArchTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = appTypography(language),
         content = content
     )
 }

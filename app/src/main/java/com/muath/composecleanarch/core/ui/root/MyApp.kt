@@ -15,6 +15,7 @@ fun MyApp(viewModel: SettingsViewModel = hiltViewModel()) {
         ComposeCleanArchTheme(
             themeMode = it.themeMode,
             useDynamicColor = it.useDynamicColor,
+            language = it.language
         ) {
             RootScaffold()
         }

@@ -6,11 +6,13 @@ import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.muath.composecleanarch.R
+import com.muath.composecleanarch.ui.theme.FavoriteColor
 
 @Composable
 fun ProductFavoriteButton(
@@ -25,12 +27,12 @@ fun ProductFavoriteButton(
             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)
         )
     ) {
+        val iconColor = if (isFavorite) FavoriteColor else LocalContentColor.current
         Icon(
             imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.Favorite,
             contentDescription = if (isFavorite) stringResource(R.string.favorite)
             else stringResource(R.string.unfavorite),
-            tint = if (isFavorite) MaterialTheme.colorScheme.error
-            else MaterialTheme.colorScheme.onSurface
+            tint = iconColor
         )
     }
 }
