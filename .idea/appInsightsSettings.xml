@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.muath.composecleanarch" />
+                  <option name="mobileSdkAppId" value="1:1071468273589:android:069942655651d91d3c83fc" />
+                  <option name="projectId" value="compose-clean-arch" />
+                  <option name="projectNumber" value="1071468273589" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
